@@ -1,37 +1,43 @@
+# things to do : test out functions and work on next, see what issues arise
 class TaskBlocker:
-    # Initializing sites and IP of OS
+    # initialize sites ip and host path
     def __init__(self, sites: list[str], redirectedIP: str = "127.0.0.1"):
         self.sites = sites
         self.redirectedIP = redirectedIP
         self.hosts_path = r"C:\Windows\System32\drivers\etc\hosts"
-    # Access files and read
+
     def block_sites(self):
-    # open file to read 
+        # read hosts path or history and ip
         with open(self.hosts_path, "r") as file:
             content = file.read()
 
+        # adding websites to block into content
         with open(self.hosts_path, "a") as file:
             for site in self.sites:
-                modifiedLine = self.redirectedIP + " " + site
-                if modifiedLine not in content:
-                    file.write(f"{modifiedLine}\n")
+                block_entry = self.redirectedIP + " " + site
+                if block_entry not in content:
+                    file.write(f"{block_entry}\n")
                 else:
                     pass
-                    
-        
-""""function block_sites():
-    open hosts_path for reading
-    read all existing lines into a list (call it existing_lines)
-    close file
 
-    open hosts_path in append mode
-    for each site in self.sites:
-        line_to_add = self.redirectedIP + " " + site
+    def unblock_sites(self):
+        # reads out each website stored
+        with open(self.hosts_path, "r") as file:
+            hosts_lines = file.readlines()
+        lines_to_keep = []
 
-        if line_to_add is NOT already in existing_lines:
-            write line_to_add to file (with a newline at the end)
-        else:
-            skip it (already blocked, don't duplicate)
-    close file
+        # checks if websites in host lines matches hosts path
+        for hosts_line in hosts_lines:
+            should_remove = False
+            for site in self.sites:
+                block_entry = self.redirectedIP + " " + site
+                if block_entry in hosts_line:
+                    should_remove = True
+        # if so remove, else keep in new list
+            if should_remove is False:
+                lines_to_keep.append(hosts_line)
 
-"""
+        # overwrite all hosts path with just the lines we keep
+        with open(self.hosts_path, "w") as file:
+            for hosts_line in lines_to_keep:
+                file.write(hosts_line)
