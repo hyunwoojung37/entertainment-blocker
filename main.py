@@ -1,4 +1,7 @@
 # things to do : test out functions and work on next, see what issues arise
+import ctypes
+
+
 class TaskBlocker:
     # initialize sites ip and host path
     def __init__(self, sites: list[str], redirectedIP: str = "127.0.0.1"):
@@ -6,7 +9,15 @@ class TaskBlocker:
         self.redirectedIP = redirectedIP
         self.hosts_path = r"C:\Windows\System32\drivers\etc\hosts"
 
+    # checks if user is able to continue with this or not
+    def is_admin(self):
+        return ctypes.windll.shell32.IsUserAnAdmin()
+
     def block_sites(self):
+        # checking if admin
+        if self.is_admin() is False:
+            print("Not allowed to use")
+            return
         # read hosts path or history and ip
         with open(self.hosts_path, "r") as file:
             content = file.read()
@@ -21,6 +32,10 @@ class TaskBlocker:
                     pass
 
     def unblock_sites(self):
+        # checking if admin
+        if self.is_admin() is False:
+            print("Not allowed to use")
+            return
         # reads out each website stored
         with open(self.hosts_path, "r") as file:
             hosts_lines = file.readlines()
