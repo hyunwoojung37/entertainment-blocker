@@ -1,5 +1,6 @@
 # things to do : test out functions and work on next, see what issues arise
 import ctypes
+import os
 
 
 class TaskBlocker:
@@ -18,6 +19,8 @@ class TaskBlocker:
         if self.is_admin() is False:
             print("Not allowed to use")
             return
+        # checks if backup file exists
+        self.backup_hosts()
         # read hosts path or history and ip
         with open(self.hosts_path, "r") as file:
             content = file.read()
@@ -36,6 +39,8 @@ class TaskBlocker:
         if self.is_admin() is False:
             print("Not allowed to use")
             return
+        # checks if backup file exists
+        self.backup_hosts()
         # reads out each website stored
         with open(self.hosts_path, "r") as file:
             hosts_lines = file.readlines()
@@ -56,3 +61,12 @@ class TaskBlocker:
         with open(self.hosts_path, "w") as file:
             for hosts_line in lines_to_keep:
                 file.write(hosts_line)
+
+    def backup_hosts(self):
+        if os.path.exists("hosts_backup.txt"):
+            print("Backup file already exists")
+        else:
+            with open(self.hosts_path, "r") as file:
+                hosts_content = file.read()
+            with open("hosts_backup.txt", "w") as file:
+                file.write(hosts_content)
