@@ -6,7 +6,12 @@ import os
 class TaskBlocker:
     # initialize sites ip and host path
     def __init__(self, sites: list[str], redirectedIP: str = "127.0.0.1"):
-        self.sites = sites
+        expanded_sites = []
+        for site in sites:
+            both_versions = self.get_both_versions(site)
+            expanded_sites.extend(both_versions)
+
+        self.sites = expanded_sites
         self.redirectedIP = redirectedIP
         self.hosts_path = r"C:\Windows\System32\drivers\etc\hosts"
 
@@ -75,11 +80,43 @@ class TaskBlocker:
             print("You do not have access")
             return
 
+    def clear_unblocked_sites(self):
+        # checking if admin
+        if self.is_admin() is False:
+            print("Not allowed to use")
+            return
+        # checks if backup file exists
+        self.backup_hosts()
+
+        with open(self.hosts_path, "r") as file:
+            hosts_lines = file.readlines()
+
+        lines_to_keep = []
+        # essentially same logic as unblock_sites, but we look for ip first
+        for hosts_line in hosts_lines:
+            if hosts_line.startswith(self.redirectedIP) is False:
+                lines_to_keep.append(hosts_line)
+
+        with open(self.hosts_path, "w") as file:
+            for line in lines_to_keep:
+                file.write(line)
+
+    def get_both_versions(self, site):
+        # ensures that both versions of websites are included
+        if site.startswith("www."):
+            with_www = site
+            without_www = site.removeprefix("www.")
+        else:
+            without_www = site
+            with_www = "www." + site
+        return [with_www, without_www]
+
     def backup_hosts(self):
         if os.path.exists("hosts_backup.txt"):
-            print("Backup file already exists")
+            pass
         else:
             with open(self.hosts_path, "r") as file:
                 hosts_content = file.read()
             with open("hosts_backup.txt", "w") as file:
                 file.write(hosts_content)
+            print("Backup file has been created")
