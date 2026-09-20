@@ -1,4 +1,4 @@
-# things to do : test out functions and work on next, see what issues arise
+# things to do : make a function that shows all blocked sites
 import ctypes
 import os
 
@@ -100,6 +100,18 @@ class TaskBlocker:
         with open(self.hosts_path, "w") as file:
             for line in lines_to_keep:
                 file.write(line)
+
+    def view_blocked_sites(self):
+        # allows us to view all blocked websites
+        lines_to_keep = []
+        with open(self.hosts_path, "r") as file:
+            hosts_lines = file.readlines()
+
+        for host_line in hosts_lines:
+            if host_line.startswith(self.redirectedIP) is True:
+                lines_to_keep.append(host_line)
+
+        return lines_to_keep
 
     def get_both_versions(self, site):
         # ensures that both versions of websites are included

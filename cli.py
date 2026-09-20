@@ -4,7 +4,7 @@ from main import TaskBlocker
 cleaned_response = None
 
 while cleaned_response != "":
-    user_response = input("Would you like to block or unblock? (B/U) \n")
+    user_response = input("Block, Unblock, or View all? (B/U/V) \n")
     cleaned_response = user_response.lower()
 
     if cleaned_response == "b":
@@ -26,5 +26,9 @@ while cleaned_response != "":
             site_list = [site.strip().lower() for site in user_input.split(",")]
             unblocked = TaskBlocker(site_list)
             unblocked.unblock_sites()
+    elif cleaned_response == "v":
+        viewed = TaskBlocker([])
+        blocked_list = viewed.view_blocked_sites()
+        print(blocked_list)
     else:
         print("Input wasn't recognized")

@@ -1,0 +1,7 @@
+# Python bytecode (compiled cache folders)
+__pycache__/
+*.pyc
+
+# Local test or temporary files
+hosts_backup.txt
+test.py
