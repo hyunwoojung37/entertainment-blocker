@@ -16,8 +16,11 @@ I personally created this because I have a hard time focussing on my work especi
 Once I learn a little more about this software cs stuff i'll update 
 9/17/26
 I have learned how to do it, PLEASE keep in mind that this can cause a severe security breach in your computer so use it carefully!
-1. py cli.py
-2. Choose what you want to do
+1. Open terminal through "Run as Administrator"
+2. Go to google settings, go to privacy and security and turn off DNS (PLEASE UNDERSTAND THAT THIS CAN CAUSE VIRUSES. BE CAREFUL)
+3. py cli.py
+4. Feel free to use!
+Bonus: If you want to check how the IP addresses are actually stored, access C:\Windows\System32\drivers\etc\hosts and open through notepad, you should be able to see all updated websites you want to block
 
 ### Goals of Project (Milestones I guess)
 

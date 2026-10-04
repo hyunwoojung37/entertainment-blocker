@@ -10,7 +10,6 @@ class TaskBlocker:
         for site in sites:
             both_versions = self.get_both_versions(site)
             expanded_sites.extend(both_versions)
-
         self.sites = expanded_sites
         self.redirectedIP = redirectedIP
         self.hosts_path = r"C:\Windows\System32\drivers\etc\hosts"
@@ -30,6 +29,16 @@ class TaskBlocker:
             # read hosts path or history and ip
             with open(self.hosts_path, "r") as file:
                 content = file.read()
+
+            # adds website only if its exact name isnt already blocked
+            blocked_sites = set()
+            for hosts_line in content.splitlines():
+                parts = hosts_line.split()
+                if len(parts) < 2:
+                    continue
+                if parts[0] == self.redirectedIP:
+                    blocked_sites.add(parts[1].lower())
+
             # adding websites to block into content
             with open(self.hosts_path, "a") as file:
                 for site in self.sites:
