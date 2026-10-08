@@ -30,7 +30,7 @@ class TaskBlocker:
             with open(self.hosts_path, "r") as file:
                 content = file.read()
 
-            # adds website only if its exact name isnt already blocked
+            # prevents duplicate entries
             blocked_sites = set()
             for hosts_line in content.splitlines():
                 parts = hosts_line.split()
@@ -43,8 +43,9 @@ class TaskBlocker:
             with open(self.hosts_path, "a") as file:
                 for site in self.sites:
                     block_entry = self.redirectedIP + " " + site
-                    if block_entry not in content:
+                    if site not in blocked_sites:
                         file.write(f"{block_entry}\n")
+                        blocked_sites.add(site)
                     else:
                         pass
         except FileNotFoundError:
@@ -70,11 +71,14 @@ class TaskBlocker:
             # checks if websites in host lines matches hosts path
             for hosts_line in hosts_lines:
                 should_remove = False
-                for site in self.sites:
-                    block_entry = self.redirectedIP + " " + site
-                    if block_entry in hosts_line:
-                        should_remove = True
-            # if so remove, else keep in new list
+                parts = hosts_line.split()
+
+                if len(parts) >= 2:
+                    for site in self.sites:
+                        if parts[0] == self.redirectedIP and parts[1] == site:
+                            should_remove = True
+                            break
+
                 if should_remove is False:
                     lines_to_keep.append(hosts_line)
 

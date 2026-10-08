@@ -42,3 +42,4 @@ Bonus: If you want to check how the IP addresses are actually stored, access C:\
 4. I also learned how github comments work, the order of progression i've been using was add ., commit -m, then push
 5. Learned a lot about how to check out hosts file stuff, like ping can show the modified domain name
 6. First half was really good practice for file writing, forgot a lot about it.
+7. Learned string parsing a lot.. too much.
