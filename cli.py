@@ -1,10 +1,11 @@
 from main import TaskBlocker
+from submission import read_submission
 
 
 cleaned_response = None
 
 while cleaned_response != "":
-    user_response = input("Block, Unblock, or View all? (B/U/V) \n")
+    user_response = input("Block, Unblock, View All, or Submit? (B/U/V/S) \n")
     cleaned_response = user_response.lower()
 
     if cleaned_response == "b":
@@ -30,5 +31,15 @@ while cleaned_response != "":
         viewed = TaskBlocker([])
         blocked_list = viewed.view_blocked_sites()
         print(blocked_list)
+    elif cleaned_response == "s":
+        assignment_instructions = input("What were the instructions\n")
+        submitted_work = input("Submit your work here\n")
+        submission_content = read_submission(submitted_work)
+
+        print("Assignment instructions:")
+        print(assignment_instructions)
+        print("submitted Work:")
+        print(submitted_work)
+
     else:
         print("Input wasn't recognized")
