@@ -36,9 +36,11 @@ while cleaned_response != "":
         submitted_work = input("Submit your work here\n")
         submission_content = read_submission(submitted_work)
         cleaned_submission_content = submission_content.strip()
-        if cleaned_submission_content == "":
-            print("File is empty")
-            exit
+        while cleaned_submission_content == "":
+            submitted_work = input("Submit your work again\n")
+            submission_content = read_submission(submitted_work)
+            if submitted_work.strip() != "":
+                exit
 
         print("Assignment instructions:")
         print(assignment_instructions)
