@@ -43,3 +43,6 @@ Bonus: If you want to check how the IP addresses are actually stored, access C:\
 5. Learned a lot about how to check out hosts file stuff, like ping can show the modified domain name
 6. First half was really good practice for file writing, forgot a lot about it.
 7. Learned string parsing a lot.. too much.
+8. Learned how to fix an debug a couple of problems regarding the www. and other domains
+9. Learning how AI actually works like getting the keys for the API and learning how ot integrate it into the app
+10. 

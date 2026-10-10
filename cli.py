@@ -35,11 +35,15 @@ while cleaned_response != "":
         assignment_instructions = input("What were the instructions\n")
         submitted_work = input("Submit your work here\n")
         submission_content = read_submission(submitted_work)
+        cleaned_submission_content = submission_content.strip()
+        if cleaned_submission_content == "":
+            print("File is empty")
+            exit
 
         print("Assignment instructions:")
         print(assignment_instructions)
         print("submitted Work:")
-        print(submitted_work)
+        print(submission_content)
 
     else:
         print("Input wasn't recognized")
